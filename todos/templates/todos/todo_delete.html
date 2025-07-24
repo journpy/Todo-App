@@ -1,9 +1,16 @@
 {% block content %}
+
+<form method='post'>
+{% csrf_token %}
 <p>Title: {{ todo.title }}</p>
 <p>Description: {{ todo.short_description }}</p>
 <p>Date Created: {{ todo.date_created }}</p>
 <p>Date Updated: {{ todo.date_updated }}</p>
 <p>User: {{ todo.user }}</p>
 <p>Completed: {{ todo.is_done }}</p>
+<br>
+<button type='delete'>Do you want to delete this todo?</button>
+<p><a href="{% url 'home' %}">&raquo; Go back to home page</a></p>
+</form>
 
 {% endblock content %}

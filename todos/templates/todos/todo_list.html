@@ -1,7 +1,7 @@
 {% block content %}
 
 {% for todo in todos %}
-<li><a href="{% url 'todo-detail' todo.id %}">{{ todo.title }}</a></li>
+<li><a href="{% url 'todo-detail' todo.id %}">{{ todo.title|lower }}</a></li>
 {% empty %}
 <p>No todos added yet.</p>
 {% endfor %}

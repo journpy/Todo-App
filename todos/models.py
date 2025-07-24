@@ -8,8 +8,9 @@ class Todo(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, blank=True, null=True, editable=False
         )
-    short_description = models.CharField(max_length=300)
-    date_created = models.DateTimeField('Date', auto_now_add=True)
+    short_description = models.TextField()
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_updated = models.DateTimeField(auto_now=True)
     is_done = models.BooleanField()
 
     def __str__(self):
