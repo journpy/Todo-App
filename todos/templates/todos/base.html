@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Todo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+  </head>
+<body>
+<div>
+<header>
+<div class="nav-left">
+<h1 class='text-center'><a href="{% url 'home' %}">Todo App</a></h1>
+</div>
+<div class="nav-right text-center">
+<a href="{% url 'todo-create' %}">+ New Todo </a>
+</div>
+</header>
+{% if user.is_authenticated %}
+<p class='text-center'>Hi {{ user.username }}!</p>
+{% load django_bootstrap5 %}
+<form method='post' action="{% url 'logout' %}" class='text-center'>
+{% csrf_token %}
+{% bootstrap_button button_type="submit" content="Logout" %}
+</form>
+{% else %}
+<section>
+<p class='text-center'>You are not logged in.</p>
+<center>
+<p><a href="{% url 'login' %}">Log In</a><p>
+<p><a href="{% url 'signup' %}">SignUp</a>
+</center>
+</section>
+{% endif %}
+{% block content %}
+{% endblock content %}
+</body>
+</html>

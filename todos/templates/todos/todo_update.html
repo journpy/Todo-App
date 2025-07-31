@@ -1,9 +1,15 @@
+{% load django_bootstrap5 %}
+
+
 {% block content %}
 
 <form method='post'>
 {% csrf_token %}
-{{ form.as_p }}
-<button type='submit', value='submit'>Update</button>
+
+{% bootstrap_form form %}
+
+{% bootstrap_button button_type="submit" content="Update" %}
+{% bootstrap_button button_type="reset" content="Cancel" %}
 </form>
 
 

@@ -1,3 +1,5 @@
+{% extends 'todos/base.html' %}
+
 {% block content %}
 <p>Title: {{ todo.title }}</p>
 <p>Description: {{ todo.short_description }}</p>
@@ -5,5 +7,6 @@
 <p>Date Updated: {{ todo.date_updated }}</p>
 <p>User: {{ todo.user }}</p>
 <p>Completed: {{ todo.is_done }}</p>
-
+<p><a href="{% url 'todo-update' todo.id %}">Edit</a></p>
+<p><a href="{% url 'todo-delete' todo.id %}">Delete</a></p>
 {% endblock content %}

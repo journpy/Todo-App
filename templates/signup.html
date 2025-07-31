@@ -2,14 +2,12 @@
 
 {% load django_bootstrap5 %}
 
+
 {% block content %}
 <form method='post'>
 {% csrf_token %}
-
 {% bootstrap_form form %}
-
-{% bootstrap_button button_type="submit" content="Submit" %}
-{% bootstrap_button button_type="reset" content="Cancel" %}
+{% bootstrap_button button_type="submit" content="SignUp" %}
 </form>
 
 {% endblock content %}
