@@ -2,23 +2,27 @@ from django.views.generic import ListView, DetailView, CreateView
 from django.views.generic.edit import UpdateView, DeleteView
 from django.urls import reverse_lazy
 from .models import Todo
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
-class TodoListView(ListView):
+class TodoListView(LoginRequiredMixin, ListView):
     """List of todos."""
     model = Todo
     template_name = 'todos/todo_list.html'
     context_object_name = 'todos'
 
 
-class TodoDetailView(LoginRequiredMixin, DetailView):
+class TodoDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     "A todo."
     model = Todo
     template_name = 'todos/todo_detail.html'
 
+    def test_func(self):
+        obj = self.get_object()
+        return obj.user == self.request.user
 
-class TodoCreateView(CreateView):
+
+class TodoCreateView(LoginRequiredMixin, CreateView):
     """Create a todo."""
     model = Todo
     template_name = 'todos/todo_create.html'
@@ -30,7 +34,7 @@ class TodoCreateView(CreateView):
         return super().form_valid(form)
 
 
-class TodoUpdateView(UpdateView):
+class TodoUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     """Update a todo."""
     model = Todo
     template_name = 'todos/todo_update.html'
@@ -40,9 +44,13 @@ class TodoUpdateView(UpdateView):
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+    
+    def test_func(self):
+        obj = self.get_object()
+        return obj.user == self.request.user
 
 
-class TodoDeleteView(DeleteView):
+class TodoDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     """Delete a todo."""
     model = Todo
     template_name = 'todos/todo_delete.html'
@@ -52,4 +60,8 @@ class TodoDeleteView(DeleteView):
         context = super().get_context_data(**kwargs)
         context['todo'] = self.get_object()
         return context
+    
+    def test_func(self):
+        obj = self.get_object()
+        return obj.user == self.request.user
     
